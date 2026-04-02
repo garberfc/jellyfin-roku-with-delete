@@ -876,6 +876,8 @@ sub onSeriesSelectedEvent(msg)
     startLoadingSpinner()
     node = getMsgPicker(msg, "picker")
     CreateSeriesDetailsGroup(node.id)
+
+
 end sub
 
 sub onSeasonSelectedEvent(msg)
@@ -1575,7 +1577,11 @@ sub onDataReturnedEvent(msg)
     if isStringEqual(selectedPopupID, "Delete-Episode")
         ' print `onDataReturnedEvent(msg): Delete-Episode, calling MainAction.onDeleteButtonClicked(${itemID})`
         if "OK" = selectedPopupButton
-            '   MainAction.onDeleteButtonClicked(itemID)
+            ' The episode is still running. We need to delay the actual call to remove the physical file
+            callFunctionAfterDelay = CreateObject("roSGNode", "CallFunctionAfterDelay")
+            callFunctionAfterDelay.control = TaskControl.RUN
+            callFunctionAfterDelay.itemID = itemID
+
         end if
 
         return

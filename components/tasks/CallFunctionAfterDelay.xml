@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component name="CallFunctionAfterDelay" extends="Task">
+    <interface>
+        <field id="functionInformation" type="assocarray" />
+        <field id="functionArguments" type="assocarray" />
+        <field id="msToWait" type="integer" />
+    </interface>
+</component>

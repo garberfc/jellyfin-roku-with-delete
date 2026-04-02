@@ -1,0 +1,36 @@
+import "pkg:/source/api/baserequest.bs"
+import "pkg:/source/MainActions.bs"
+import "pkg:/source/utils/misc.bs"
+
+sub init()
+    'print "CallFunctionAfterDelay.bs: Top of init()"
+    port = CreateObject("roMessagePort")
+    m.top.observeField("functionArguments", port)
+    m.top.functionName = "TaskToRun"
+    'print "CallFunctionAfterDelay.bs: end of init()"
+end sub
+
+function TaskToRun()
+    print `TaskToRun(): top: ${ getLocalTimeStamp()}`
+
+    print `TaskToRun(): before wait: ${ getLocalTimeStamp()}`
+    if m.top.msToWait > 0
+        print `waiting ms=${m.top.msToWait}`
+        port = CreateObject("roMessagePort")
+        wait(m.top.msToWait, port)
+    end if
+    print `TaskToRun(): after wait: ${ getLocalTimeStamp()}`
+
+    ' MainAction.onDeleteButtonClicked(itemID)
+
+    print m.top.functionArguments
+    print m.top.functionInformation
+    m.top.functionInformation["functionName"](m.top.functionArguments)
+
+
+    return true
+
+
+end function
+
+
