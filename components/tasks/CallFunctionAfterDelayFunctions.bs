@@ -1,0 +1,7 @@
+function testFCG(args as object) as boolean
+    print `Top of testFCG(): args=${args}`
+    print args
+    return true
+end function
+
+
