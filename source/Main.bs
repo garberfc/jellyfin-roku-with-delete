@@ -120,12 +120,12 @@ sub Main (args as dynamic) as void
             return
         end if
 
-        callFunctionAfterDelay = CreateObject("roSGNode", "CallFunctionAfterDelay")
-        print "calling TaskControl.RUN"
-        callFunctionAfterDelay.control = TaskControl.RUN
-        callFunctionAfterDelay.msToWait = 2000
-        callFunctionAfterDelay.functionName = "TestFCG"
-        callFunctionAfterDelay.functionArguments = { arg1: "arg1 value", arg2: 33 }
+        ' The following is example / test code
+        'callFunctionAfterDelay = CreateObject("roSGNode", "CallFunctionAfterDelay")
+        'callFunctionAfterDelay.control = TaskControl.RUN
+        'callFunctionAfterDelay.msToWait = 2000
+        'callFunctionAfterDelay.functionName = "NOOP"
+        'callFunctionAfterDelay.functionArguments = { arg1: "arg1 value", arg2: 33 }
 
         if isNodeEvent(msg, "jumpTo")
             onJumpToEvent(msg)

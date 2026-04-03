@@ -1,6 +1,19 @@
-function testFCG(args as object) as boolean
-    print `Top of testFCG(): args=${args}`
+import "pkg:/source/MainActions.bs"
+
+' Limitations:
+'   - The only types of objects that can be packaged in the functionArguments are those that are supported
+'     in the <field type="XXX" />. Others will be silently removed by the runtime.
+
+
+function NOOP(args as object) as boolean
+    print "Top of NOOP()"
     print args
+    return true
+end function
+
+
+function deleteItem(args as object) as boolean
+    MainAction.onDeleteButtonClicked(args.itemID)
     return true
 end function
 

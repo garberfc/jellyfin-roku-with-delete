@@ -1,35 +1,25 @@
 
 import "pkg:/components/tasks/CallFunctionAfterDelayFunctions.bs"
-'import "pkg:/source/MainEventHandlers.bs"
 
 ' https://stackoverflow.com/questions/41252735/is-it-possible-to-assign-an-anonymous-function-to-a-global-associative-array-pro
 
 sub init()
-    print "CallFunctionAfterDelay.bs: Top of init()"
     port = CreateObject("roMessagePort")
     m.top.observeField("functionArguments", port)
     m.top.functionName = "TaskToRun"
-    print "CallFunctionAfterDelay.bs: end of init()"
 end sub
 
 function TaskToRun()
-    print `TaskToRun(): top: `
-
-    print `TaskToRun(): before wait: `
+    ' A wait time of zero will wait indefinitely.
     if m.top.msToWait > 0
-        print `waiting ms=${m.top.msToWait}`
         port = CreateObject("roMessagePort")
         wait(m.top.msToWait, port)
     end if
-    print `TaskToRun(): after wait: `
 
-    ' MainAction.onDeleteButtonClicked(itemID)
+    if m.top.functionName = "NOOP" then return NOOP(m.top.functionArguments)
+    if m.top.functionName = "deleteItem" then return deleteItem(m.top.functionArguments)
 
-    print m.top.functionArguments
-
-    if m.top.functionName = "TestFCG" then return TestFCG(m.top.functionArguments)
-
-    print `CallFunctionAfterDelay.TaskToRun(): Unknown functionName=${m.top.functionName}`
+    print `ERROR: CallFunctionAfterDelay.TaskToRun(): Unknown functionName=${m.top.functionName}`
 
     return true
 

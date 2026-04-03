@@ -1580,8 +1580,9 @@ sub onDataReturnedEvent(msg)
             ' The episode is still running. We need to delay the actual call to remove the physical file
             callFunctionAfterDelay = CreateObject("roSGNode", "CallFunctionAfterDelay")
             callFunctionAfterDelay.control = TaskControl.RUN
-            callFunctionAfterDelay.itemID = itemID
-
+            callFunctionAfterDelay.msToWait = 60 * 1000 ' Give the viewer time to click away from the episode
+            callFunctionAfterDelay.functionName = "deleteItem"
+            callFunctionAfterDelay.functionArguments = { itemID: itemID }
         end if
 
         return
