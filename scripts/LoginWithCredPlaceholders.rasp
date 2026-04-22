@@ -1,0 +1,50 @@
+params:   
+    rasp_version: 1
+    default_keypress_wait: 2
+    channels: 
+        Jellyfin w/ Delete: dev
+steps:
+    - launch: Jellyfin w/ Delete
+    - pause: 4
+    - press: down
+    - press: ok
+    - text: http://thegarbers3.ddns.net:8096
+    - press: down
+    - press: down
+    - press: down
+    - press: down
+    - press: down
+    - press: down
+    - press: down
+    - press: down
+    - press: up
+    - press: ok
+    - press: down
+    - press: ok
+# - text: garberfc
+    - text: script-login
+    - press: down
+    - press: down
+    - press: down
+    - press: down
+    - press: down
+    - press: down
+    - press: down
+    - press: up
+    - press: ok
+    - press: down
+    - press: ok
+# - text: Bailey2024
+    - text: script-password
+    - press: down
+    - press: down
+    - press: down
+    - press: down
+    - press: down
+    - press: down
+    - press: down
+    - press: up
+    - press: ok
+    - press: down
+    - press: down
+    - press: ok

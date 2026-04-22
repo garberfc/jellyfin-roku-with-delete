@@ -1,0 +1,7 @@
+params:   
+    rasp_version: 1
+    default_keypress_wait: 2
+    channels: 
+        Jellyfin w/ Delete: dev
+steps:
+    - press: ok

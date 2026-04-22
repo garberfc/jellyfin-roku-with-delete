@@ -1,5 +1,6 @@
 *.svg
 .env
+*.pkg
 # BrightScript 
 dist/apps
 out/

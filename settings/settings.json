@@ -324,7 +324,7 @@
         "description": "If no Outro media segment exists, set how many seconds before the end of an episode the Skip Outro button should appear. Set to 0 to disable.",
         "settingName": "playback.nextupbuttonseconds",
         "type": "integer",
-        "default": "30"
+        "default": "60"
       },
       {
         "title": "Preferred Audio Codec",
