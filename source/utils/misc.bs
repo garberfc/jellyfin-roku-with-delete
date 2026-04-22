@@ -709,15 +709,3 @@ function serverVersionMeetsMinimumRequirements(systemVersion as string, targetVe
     ' Server is the exact version needed
     return true
 end function
-
-function getLocalTimeStamp() as string
-    datetime = CreateObject("roDateTime")
-
-    if isValid(datetime)
-        return "isValid" ' datetime '.toLocalTime().toISOString()
-    else
-        return "No roDateTime found!"
-    end if
-
-end function
-

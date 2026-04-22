@@ -27,9 +27,6 @@ sub init()
     m.top.observeField("serverUrl", "clearErrorMessage")
 
     ScanForServers()
-
-    m.top.signalBeacon("AppLaunchComplete") ' Roku Performance monitoring
-
 end sub
 
 function onKeyEvent(key as string, press as boolean) as boolean
