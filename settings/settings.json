@@ -92,11 +92,21 @@
         "default": "false"
       },
       {
-        "title": "Custom Trickplay",
-        "description": "Display custom trickplay images even if this Roku says it's displaying its own. This may cause the two images to overlay on top of each other.",
-        "settingName": "playback.trickplay.forcecustom",
-        "type": "bool",
-        "default": "false"
+        "title": "Trickplay Display",
+        "description": "Select trickplay display format.",
+        "settingName": "playback.trickplay.displayTrickplayFormat",
+        "type": "radio",
+        "default": "five",
+        "options": [
+          {
+            "title": "Five trickplay images",
+            "id": "five"
+          },
+          {
+            "title": "Single trickplay image that moves",
+            "id": "single"
+          }
+        ]
       },
       {
         "title": "Force Transcoding",
@@ -325,6 +335,13 @@
         "settingName": "playback.nextupbuttonseconds",
         "type": "integer",
         "default": "60"
+      },
+        {
+        "title": "Playback Speed Controls (Experimental)",
+        "description": "Use at your own risk. We make no guarantees this will work for you. \n 1. This feature may not work on this device, yet work on others \n 2. Some speed options may not work on this device, yet work on others \n 3. Roku may block this feature without warning; even if the Jellyfin client doesn't update",
+        "settingName": "playback.showPlaybackSpeedControls",
+        "type": "bool",
+        "default": "false"
       },
       {
         "title": "Preferred Audio Codec",
@@ -1296,6 +1313,62 @@
                 "data": "154"
               }
             ]
+          },
+          {
+            "title": "Live TV",
+            "description": "Settings relating to Live TV.",
+            "children": [
+              {
+                "title": "Channel Title Info",
+                "description": "Select what information to use as a channel's title.",
+                "settingName": "tvChannelTitleInfo",
+                "type": "radio",
+                "default": "numberName",
+                "options": [
+                  {
+                    "title": "Channel Number and Name",
+                    "id": "numberName"
+                  },
+                  {
+                    "title": "Channel Number",
+                    "id": "number"
+                  },
+                  {
+                    "title": "Channel Name",
+                    "id": "name"
+                  }
+                ]
+              },
+              {
+                "title": "TV Guide Channel Display",
+                "description": "Select how to display a channel in the Live TV guide.",
+                "settingName": "tvGuideChannelDisplay",
+                "type": "radio",
+                "default": "logoTitle",
+                "options": [
+                  {
+                    "title": "Channel Logo and Title",
+                    "id": "logoTitle"
+                  },
+                  {
+                    "title": "Channel Logo",
+                    "id": "logo"
+                  },
+                  {
+                    "title": "Channel Title",
+                    "id": "title"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Load Items Limit",
+            "description": "Number of items to load together on library screens.",
+            "settingName": "ui.library.loadItemsLimit",
+            "type": "integer",
+            "min": "15",
+            "default": "60"
           },
           {
             "title": "TV Shows",
