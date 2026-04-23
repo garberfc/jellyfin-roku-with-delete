@@ -1091,7 +1091,7 @@ sub displaySegmentDeleteButton(segmentType as string)
     buttonText = "Delete Episode"
     if isStringEqual(m.deleteSegmentButton.text, tr(buttonText)) then return
 
-    if m.osd.visible then return ' Don't show if OSD is visible
+    ' if m.osd.visible then return ' Don't show if OSD is visible
 
     m.deleteSegmentButton.visible = true
     m.deleteSegmentButton.text = tr(buttonText)
@@ -1599,6 +1599,8 @@ sub showOSD(whichfocus as string)
     end if
     m.skipSegmentButton.setFocus(false)
     m.skipSegmentButton.focus = false
+    m.deleteSegmentButton.setFocus(false)
+    m.deleteSegmentButton.focus = false
     m.scrubberOldPosition.visible = true
     m.osd.setFocus(true)
 end sub
@@ -1838,17 +1840,19 @@ function onKeyEvent(key as string, press as boolean) as boolean
         return true ' return true as we've handled all possible keys
     end if
 
-    if not m.LoadMetaDataTask.isIntro
-        ' Don't allow user to open menu prior to video loading
-        if not stateAllowsOSD() then return true
-        if not m.osd.visible
-            showOSD("progressBar")
-        else
-            m.osd.callFunc("setOsdStatus", "progressBarGroup")
+    ' Handle keypresses for video seeking
+    if key = KeyCode.RIGHT or key = KeyCode.LEFT or key = KeyCode.FASTFORWRD or key = KeyCode.REWIND or (m.osd.isSeeking and (key = Keycode.BACK or key = Keycode.OK or key = Keycode.PLAY))
+        if not m.LoadMetaDataTask.isIntro
+            ' Don't allow user to open menu prior to video loading
+            if not stateAllowsOSD() then return true
+            if not m.osd.visible
+                showOSD("progressBar")
+            else
+                m.osd.callFunc("setOsdStatus", "progressBarGroup")
+            end if
+            handleSeekKey(key)
         end if
-        handleSeekKey(key)
     end if
-
 
     ' Skip back 10 seconds on replay key press, but only if not currently seeking as it would interfere with seek controls
     if key = KeyCode.REPLAY
