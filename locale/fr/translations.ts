@@ -2371,15 +2371,15 @@
     </message>
     <message>
         <source>Search Unavailable</source>
-        <translation type="unfinished">Recherche indisponible</translation>
+        <translation>Recherche indisponible</translation>
     </message>
     <message>
         <source>Roku&apos;s video player got stuck buffering video</source>
-        <translation type="unfinished">Le lecteur vidéo Roku est bloqué en cours de chargement</translation>
+        <translation>Le lecteur vidéo Roku est bloqué en cours de chargement</translation>
     </message>
     <message>
         <source>Roku&apos;s video player threw the following error</source>
-        <translation type="unfinished">Le lecteur vidéo Roku a renvoyé l&apos;erreur suivante</translation>
+        <translation>Le lecteur vidéo Roku a renvoyé l&apos;erreur suivante</translation>
     </message>
     <message>
         <source>Roku thought it could direct play this media, but playback never started.</source>
@@ -2391,7 +2391,188 @@
     </message>
     <message>
         <source>Forces Jellyfin to try direct playing video media, Live TV excluded. Enabling this ignores all other playback support settings and will always first attempt direct playback. It also changes how transcode reason is displayed.</source>
-        <translation type="unfinished">Force Jellyfin à tenter la lecture directe des médias vidéo, à l&apos;exception de la TV en direct. L&apos;activation de cette option ignore tous les autres paramètres de prise en charge de la lecture et tentera toujours la lecture directe en priorité. Cela modifie également la manière dont la raison du transcodage est affichée.</translation>
+        <translation>Force Jellyfin à tenter la lecture directe des médias vidéo, à l&apos;exception de la TV en direct. L&apos;activation de cette option ignore tous les autres paramètres de prise en charge de la lecture et tentera toujours la lecture directe en priorité. Cela modifie également la manière dont la raison du transcodage est affichée.</translation>
+    </message>
+    <message>
+        <source>Roku thought it could direct play this media, but the playback duration was incorrect.</source>
+        <translation>Roku pensait pouvoir lire directement ce fichier multimédia, mais la durée de lecture indiquée était erronée.</translation>
+    </message>
+    <message>
+        <source>Play from beginning</source>
+        <translation>Lire depuis le début</translation>
+    </message>
+    <message>
+        <source>No Default</source>
+        <translation>Pas de valeur par défaut</translation>
+    </message>
+    <message>
+        <source>No cast data available.</source>
+        <translation>Aucune information sur la distribution n&apos;est disponible.</translation>
+    </message>
+    <message>
+        <source>as %1</source>
+        <translation>en %1</translation>
+    </message>
+    <message>
+        <source>More with %1 in Your Library</source>
+        <translation>Plus de contenu avec %1 dans votre bibliothèque</translation>
+    </message>
+    <message>
+        <source>No other titles found in your library.</source>
+        <translation>Aucun autre titre n&apos;a été trouvé dans votre bibliothèque.</translation>
+    </message>
+    <message>
+        <source>Resume from</source>
+        <translation>Reprendre de</translation>
+    </message>
+    <message>
+        <source>Replace Roku&apos;s default subtitle functions with custom functions. If fallback fonts are configured and enabled on the server, those fonts will be used. A CJK fallback font is required for CJK rendering. To support bold and italics, you must have additional font files with the words &quot;bold&quot;, &quot;italic&quot;, and &quot;bolditalic&quot; in the filename.</source>
+        <translation>Remplacez les fonctions de sous-titrage par défaut de Roku par des fonctions personnalisées. Si des polices de secours sont configurées et activées sur le serveur, ce sont celles-ci qui seront utilisées. Une police de secours CJK est requise pour l&apos;affichage des caractères CJK. Pour prendre en charge le gras et l&apos;italique, vous devez disposer de fichiers de polices supplémentaires dont le nom de fichier contient les mots « bold », « italic » et « bolditalic ».</translation>
+    </message>
+    <message>
+        <source>Playback Controls Inactivity Timeout</source>
+        <translation>Délai d&apos;inactivité des commandes de lecture</translation>
+    </message>
+    <message>
+        <source>Set the length of time in seconds that the playback control overlay will remain visible when no buttons are pressed. Set to 0 to disable.</source>
+        <translation>Définissez la durée en secondes pendant laquelle l&apos;interface de contrôle de lecture restera visible lorsqu&apos;aucun bouton n&apos;est utilisé. Mettre la valeur à 0 pour désactiver cette option.</translation>
+    </message>
+    <message>
+        <source>All Playable Media</source>
+        <translation>Tous les médias jouables</translation>
+    </message>
+    <message>
+        <source>Force live TV to be transcoded. If All Playable Media is already set to Force Transcode (Remux Disabled), this setting is ignored.</source>
+        <translation>Forcer le transcodage de la télévision en direct. Si l&apos;option « Tous les médias lisibles » est déjà définie sur « Forcer le transcodage (remux désactivé) », ce paramètre est ignoré.</translation>
+    </message>
+    <message>
+        <source>Videos</source>
+        <translation>Vidéos</translation>
+    </message>
+    <message>
+        <comment>Last played time of media item</comment>
+        <source>RECENTLY_WATCHED</source>
+        <translation>Vu récemment</translation>
+    </message>
+    <message>
+        <source>Press Stop again to close player</source>
+        <translation>Appuyez à nouveau sur « Stop » pour fermer le lecteur</translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <translation>Défaut</translation>
+    </message>
+    <message>
+        <source>More from</source>
+        <translation>En savoir plus sur</translation>
+    </message>
+    <message>
+        <source>Playback Mode</source>
+        <translation>Mode de lecture</translation>
+    </message>
+    <message>
+        <source>Unknown Artist</source>
+        <translation>Artiste Inconnu</translation>
+    </message>
+    <message>
+        <source>Unknown Album</source>
+        <translation>Album Inconnu</translation>
+    </message>
+    <message>
+        <source>Radio Stations</source>
+        <translation>Station radio</translation>
+    </message>
+    <message>
+        <source>Most Played Tracks</source>
+        <translation>Pistes les plus jouées</translation>
+    </message>
+    <message>
+        <source>Least Played Tracks</source>
+        <translation>Pistes les moins jouées</translation>
+    </message>
+    <message>
+        <source>Shuffle play your most played tracks</source>
+        <translation>Lecture aléatoire des pistes les plus jouées</translation>
+    </message>
+    <message>
+        <source>Shuffle play your least played tracks</source>
+        <translation>Lecture aléatoire des pistes les moins jouées</translation>
+    </message>
+    <message>
+        <source>Station Name</source>
+        <translation>Nom de la station</translation>
+    </message>
+    <message>
+        <source>Maximum number of items to load</source>
+        <translation>Nombre maximum d&apos;articles à charger</translation>
+    </message>
+    <message>
+        <source>Create Station</source>
+        <translation>Créer une station</translation>
+    </message>
+    <message>
+        <source>Subtitle</source>
+        <translation>Sous-titres</translation>
+    </message>
+    <message>
+        <source>A short description of the radio station</source>
+        <translation>Description courte de la station radio</translation>
+    </message>
+    <message>
+        <source>List of genres to include in station content</source>
+        <translation>Liste des genres à inclure dans le contenu de la station</translation>
+    </message>
+    <message>
+        <source>Background Color</source>
+        <translation>Couleur d&apos;arrière-plan</translation>
+    </message>
+    <message>
+        <source>Background color to use on home screen block</source>
+        <translation>Couleur d&apos;arrière-plan à utiliser pour le bloc d&apos;écran d&apos;accueil</translation>
+    </message>
+    <message>
+        <source>The server found no media matching the filter criteria for this radio station.</source>
+        <translation>Le serveur n&apos;a trouvé aucun média correspondant aux critères de filtrage pour cette station radio.</translation>
+    </message>
+    <message>
+        <source>No media matched radio station criteria</source>
+        <translation>Aucun média ne correspond aux critères de cette station radio</translation>
+    </message>
+    <message>
+        <source>Confirm Exit</source>
+        <translation>Confirmer sortie</translation>
+    </message>
+    <message>
+        <source>Show a confirmation prompt before exiting Jellyfin from the home screen.</source>
+        <translation>Afficher une fenêtre de confirmation avant de quitter Jellyfin depuis l&apos;écran d&apos;accueil.</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to exit Jellyfin?</source>
+        <translation>Êtes-vous sûr de vouloir quitter Jellyfin ?</translation>
+    </message>
+    <message>
+        <source>Press Play/Pause to jump to OK button</source>
+        <translation>Appuyez sur « Lecture/Pause » pour passer au bouton « OK »</translation>
+    </message>
+    <message>
+        <source>Name to identify radio station</source>
+        <translation>Nom permettant d&apos;identifier la station de radio</translation>
+    </message>
+    <message>
+        <source>List of years to include in station content</source>
+        <translation>Liste des années à inclure dans le contenu de la station</translation>
+    </message>
+    <message>
+        <source>Field to sort media by before cutting off at limit</source>
+        <translation>Champ selon lequel trier les médias avant de les tronquer à la limite</translation>
+    </message>
+    <message>
+        <source>Item Limit</source>
+        <translation>Limte d&apos;élément</translation>
+    </message>
+    <message>
+        <source>Direction to sort media before cutting off at limit</source>
+        <translation>Instruction de trier les supports avant de les couper à la limite</translation>
     </message>
 </context>
 </TS>

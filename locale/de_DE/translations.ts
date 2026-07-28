@@ -18,7 +18,7 @@
     </message>
     <message>
         <source>Ends at %1</source>
-        <translation>Endet um %1</translation>
+        <translation>Endet bei %1</translation>
     </message>
     <message>
         <source>Enter Configuration</source>
@@ -62,7 +62,7 @@
     </message>
     <message>
         <source>Shuffle</source>
-        <translation>Zufallswiedergabe</translation>
+        <translation>Zufällige Wiedergabe</translation>
     </message>
     <message>
         <source>Sign In</source>
@@ -2429,6 +2429,179 @@
     <message>
         <source>Play from beginning</source>
         <translation>Von Beginn starten</translation>
+    </message>
+    <message>
+        <source>No cast data available.</source>
+        <translation>Keine Angaben zur Besetzung verfügbar.</translation>
+    </message>
+    <message>
+        <source>as %1</source>
+        <translation>als %1</translation>
+    </message>
+    <message>
+        <source>More with %1 in Your Library</source>
+        <translation>Mehr mit %1 in deiner Bibliothek</translation>
+    </message>
+    <message>
+        <source>No other titles found in your library.</source>
+        <translation>Keine weiteren Titel in deiner Bibliothek gefunden.</translation>
+    </message>
+    <message>
+        <source>Resume from</source>
+        <translation>Fortfahren von</translation>
+    </message>
+    <message>
+        <source>Playback Controls Inactivity Timeout</source>
+        <translation>Wiedergabesteuerung Inaktivitäts-Timeout</translation>
+    </message>
+    <message>
+        <source>Set the length of time in seconds that the playback control overlay will remain visible when no buttons are pressed. Set to 0 to disable.</source>
+        <translation>Lege die Zeitspanne in Sekunden fest, die die Wiedergabesteuerungsanzeige sichtbar bleibt, wenn keine Tasten gedrückt werden. Stelle den Wert auf 0, um sie zu deaktivieren.</translation>
+    </message>
+    <message>
+        <source>TV Guide Channel Display</source>
+        <translation>TV Guide Kanalanzeige</translation>
+    </message>
+    <message>
+        <source>Playback Speed Controls (Experimental)</source>
+        <translation>Wiedergabegeschwindigkeit-Steuerung (Experimentell)</translation>
+    </message>
+    <message>
+        <source>Use at your own risk. We make no guarantees this will work for you. \n 1. This feature may not work on this device, yet work on others \n 2. Some speed options may not work on this device, yet work on others \n 3. Roku may block this feature without warning; even if the Jellyfin client doesn&apos;t update</source>
+        <translation>Die Nutzung erfolgt auf eigene Gefahr. Wir übernehmen keine Garantie für die Funktionsfähigkeit. \n 1. Diese Funktion funktioniert möglicherweise nicht auf diesem Gerät, aber auf anderen. \n 2. Einige Geschwindigkeitsoptionen funktionieren möglicherweise nicht auf diesem Gerät, aber auf anderen. \n 3. Roku kann diese Funktion ohne Vorwarnung blockieren, selbst wenn der Jellyfin-Client nicht aktualisiert wird.</translation>
+    </message>
+    <message>
+        <source>Roku thought it could direct play this media, but the playback duration was incorrect.</source>
+        <translation>Roku ging davon aus, dass es diese Medien direkt abspielen könnte, aber die Wiedergabedauer war falsch.</translation>
+    </message>
+    <message>
+        <comment>Last played time of media item</comment>
+        <source>RECENTLY_WATCHED</source>
+        <translation>Kürzlich angesehen</translation>
+    </message>
+    <message>
+        <source>Videos</source>
+        <translation>Videos</translation>
+    </message>
+    <message>
+        <source>Press Stop again to close player</source>
+        <translation>Nochmal Stop drücken um den Player zu schliessen</translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <translation>Standard</translation>
+    </message>
+    <message>
+        <source>More from</source>
+        <translation>Mehr von</translation>
+    </message>
+    <message>
+        <source>Playback Mode</source>
+        <translation>Wiedergabemodus</translation>
+    </message>
+    <message>
+        <source>Unknown Artist</source>
+        <translation>Unbekannter Künstler</translation>
+    </message>
+    <message>
+        <source>Unknown Album</source>
+        <translation>Unbekanntes Album</translation>
+    </message>
+    <message>
+        <source>Confirm Exit</source>
+        <translation>Beenden bestätigen</translation>
+    </message>
+    <message>
+        <source>Show a confirmation prompt before exiting Jellyfin from the home screen.</source>
+        <translation>Bestätigungsabfrage vor dem Schließen von Jellyfin vom Homescreen anzeigen.</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to exit Jellyfin?</source>
+        <translation>Möchtest Du Jellyfin wirklich beenden?</translation>
+    </message>
+    <message>
+        <source>Radio Stations</source>
+        <translation>Radiosender</translation>
+    </message>
+    <message>
+        <source>Most Played Tracks</source>
+        <translation>Am häufigsten gespielte Lieder</translation>
+    </message>
+    <message>
+        <source>Least Played Tracks</source>
+        <translation>Am wenigsten gespielte Lieder</translation>
+    </message>
+    <message>
+        <source>Shuffle play your most played tracks</source>
+        <translation>Die meistabgespielten Lieder gemischt wiedergeben</translation>
+    </message>
+    <message>
+        <source>Shuffle play your least played tracks</source>
+        <translation>Die am wenigsten abgespielten Lieder gemischt wiedergeben</translation>
+    </message>
+    <message>
+        <source>Press Play/Pause to jump to OK button</source>
+        <translation>Drücke Wiedergabe/Pause um zum OK Knopf zu springen</translation>
+    </message>
+    <message>
+        <source>Station Name</source>
+        <translation>Sendername</translation>
+    </message>
+    <message>
+        <source>Name to identify radio station</source>
+        <translation>Name um Radiosender zu identifizieren</translation>
+    </message>
+    <message>
+        <source>List of years to include in station content</source>
+        <translation>Liste von Jahren die für Senderinhalte eingeschlossen werden soll</translation>
+    </message>
+    <message>
+        <source>Field to sort media by before cutting off at limit</source>
+        <translation>Feld um Medien zu sortieren bevor sie bei einer Begrenzung abgeschnitten werden</translation>
+    </message>
+    <message>
+        <source>Item Limit</source>
+        <translation>Elementebegrenzung</translation>
+    </message>
+    <message>
+        <source>Maximum number of items to load</source>
+        <translation>Maximale Anzahl an Elementen die geladen werden</translation>
+    </message>
+    <message>
+        <source>Create Station</source>
+        <translation>Sender anlegen</translation>
+    </message>
+    <message>
+        <source>Subtitle</source>
+        <translation>Untertitel</translation>
+    </message>
+    <message>
+        <source>A short description of the radio station</source>
+        <translation>Eine kurze Beschreibung für den Radiosender</translation>
+    </message>
+    <message>
+        <source>List of genres to include in station content</source>
+        <translation>Genreliste die für Senderinhalte eingeschlossen werden soll</translation>
+    </message>
+    <message>
+        <source>Direction to sort media before cutting off at limit</source>
+        <translation>Richtung in die Medien sortiert werden bevor sie bei einer Begrenzung abschnitten werden</translation>
+    </message>
+    <message>
+        <source>Background Color</source>
+        <translation>Hintergrundfarbe</translation>
+    </message>
+    <message>
+        <source>Background color to use on home screen block</source>
+        <translation>Hintergrundfarbe die auf dem Homescreen-Block verwendet wird</translation>
+    </message>
+    <message>
+        <source>The server found no media matching the filter criteria for this radio station.</source>
+        <translation>Der Server hat keine Medien gefunden, die den Filterkriterien für diesen Radiosender entsprechen.</translation>
+    </message>
+    <message>
+        <source>No media matched radio station criteria</source>
+        <translation>Keine Medien passten zum Radiosenderkriterium</translation>
     </message>
 </context>
 <context>
