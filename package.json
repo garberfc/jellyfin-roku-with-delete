@@ -1,7 +1,7 @@
 {
   "name": "jellyfin_with_delete",
   "type": "module",
-  "version": "3.2.2",
+  "version": "3.2.3",
   "description": "Official Roku with Delete app for Jellyfin media server",
   "dependencies": {
     "@rokucommunity/bslib": "0.1.1",
