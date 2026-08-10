@@ -2212,6 +2212,18 @@ sub processLibraryItemPopup(selectedPopupButton as string, itemID as string, par
         return
     end if
 
+    ' Add item to playlist
+    if isStringEqual(selectedPopupButton, tr("Add To Playlist"))
+        activeScene = m.global.sceneManager.callFunc("getActiveScene")
+        MainAction.onPlaylistButtonClicked({
+            itemContent: {
+                id: itemID
+            }
+        })
+
+        return
+    end if
+
     if isStringEqual(selectedPopupButton, tr("Existing Playlist"))
         if not isValidAndNotEmpty(m.playlistData)
             activeScene = m.global.sceneManager.callFunc("getActiveScene")
