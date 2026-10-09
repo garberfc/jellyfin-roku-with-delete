@@ -39,6 +39,8 @@ sub init()
     m.LoadProgramDetailsTask = createObject("roSGNode", "LoadProgramDetailsTask")
     m.LoadProgramDetailsTask.observeField("programDetails", "onProgramDetailsLoaded")
 
+    m.LoadRecordingTimerTask = createObject("roSGNode", "LoadRecordingTimerTask")
+
     ' Hide the overhang on init to prevent showing 2 clocks
     m.top.getScene().findNode("overhang").visible = false
     currentItem = m.global.queueManager.callFunc("getCurrentItem")
@@ -81,6 +83,8 @@ sub init()
     m.chapterContent = m.top.findNode("chapterContent")
     m.osd = m.top.findNode("osd")
     m.osd.observeField("action", "onOSDAction")
+    m.osd.isRecording = false
+    m.osd.recordingOffset = 0
     m.castPopup = m.top.findNode("castPopup")
     m.clock = m.osd.findNode("clock")
     if isValid(m.clock)
@@ -92,6 +96,9 @@ sub init()
 
     m.videocontrols = m.osd.findNode("videoControls")
     m.optioncontrols = m.osd.findNode("optionControls")
+    m.favoriteChannelButton = invalid
+    m.favoriteChannelId = string.EMPTY
+    m.channelIsFavorite = false
     m.progressBarBackground = m.osd.findNode("progressBarBackground")
     m.progressBarGroup = m.osd.findNode("progressBarGroup")
 
@@ -457,7 +464,15 @@ sub handleShowVideoOverviewPopupAction()
         end if
     end if
 
-    m.global.sceneManager.callFunc("standardDialog", overviewPopupTitle, { data: ["<p>" + m.overview + "</p>"] })
+    info = []
+    if isValid(m.premiere)
+        info.push("<header>" + m.premiere + "</header>")
+    end if
+    if isValid(m.overview)
+        info.push("<p>" + m.overview + "</p>")
+    end if
+
+    m.global.sceneManager.callFunc("standardDialog", overviewPopupTitle, { data: info })
 end sub
 
 sub handleShowCastCrewPopupAction()
@@ -474,6 +489,11 @@ end sub
 '
 sub onOSDAction()
     action = LCase(m.osd.action)
+
+    if action = "favoritechannel"
+        toggleFavoriteChannel()
+        return
+    end if
 
     if action = "hide"
         handleHideAction(false)
@@ -559,6 +579,75 @@ sub onOSDAction()
         setSkipSegmentButtonFocus()
         return
     end if
+end sub
+
+' Show a channel favorite action in the OSD only for Live TV channels.
+sub configureFavoriteChannelButton(video as object)
+    m.favoriteChannelId = chainLookupReturn(video, "favoriteChannelId", string.EMPTY)
+    currentItem = m.global.queueManager.callFunc("getCurrentItem")
+    if not isValidAndNotEmpty(m.favoriteChannelId)
+        m.favoriteChannelId = chainLookupReturn(currentItem, "favoriteChannelId", string.EMPTY)
+    end if
+    if not isValidAndNotEmpty(m.favoriteChannelId)
+        currentType = LCase(chainLookupReturn(currentItem, "type", string.EMPTY))
+        if isStringEqual(currentType, ItemType.TVCHANNEL)
+            m.favoriteChannelId = chainLookupReturn(currentItem, "id", string.EMPTY)
+        else if isStringEqual(currentType, ItemType.PROGRAM)
+            m.favoriteChannelId = chainLookupReturn(currentItem, "json.ChannelId", string.EMPTY)
+            if not isValidAndNotEmpty(m.favoriteChannelId)
+                m.favoriteChannelId = chainLookupReturn(currentItem, "id", string.EMPTY)
+            end if
+        end if
+    end if
+
+    if not isValidAndNotEmpty(m.favoriteChannelId)
+        if isValid(m.favoriteChannelButton)
+            m.optioncontrols.removeChild(m.favoriteChannelButton)
+            m.favoriteChannelButton = invalid
+        end if
+        return
+    end if
+
+    if not isValid(m.favoriteChannelButton)
+        m.favoriteChannelButton = createObject("roSGNode", "IconButton")
+        m.favoriteChannelButton.id = "favoriteChannel"
+        m.favoriteChannelButton.padding = 16
+        m.favoriteChannelButton.height = 65
+        m.favoriteChannelButton.width = 100
+        m.favoriteChannelButton.background = ColorPalette.DARKGREY
+        m.favoriteChannelButton.focusBackground = chainLookupReturn(m.global.session, "user.settings.colorCursor", ColorPalette.HIGHLIGHT)
+        m.optioncontrols.appendChild(m.favoriteChannelButton)
+    end if
+
+    m.channelIsFavorite = chainLookupReturn(video, "isFavoriteChannel", false)
+    updateFavoriteChannelButton()
+end sub
+
+sub updateFavoriteChannelButton()
+    if not isValid(m.favoriteChannelButton) then return
+
+    m.favoriteChannelButton.icon = m.channelIsFavorite ? "pkg:/images/icons/favorite_selected.png" : "pkg:/images/icons/favorite_outline_white.png"
+end sub
+
+sub toggleFavoriteChannel()
+    if not isValidAndNotEmpty(m.favoriteChannelId) then return
+    if isValid(m.favoriteChannelTask)
+        if m.favoriteChannelTask.state = TaskControl.RUN then return
+    end if
+
+    m.channelIsFavorite = not m.channelIsFavorite
+    updateFavoriteChannelButton()
+    previousScene = m.global.sceneManager.callFunc("getPreviousScene")
+    if isValid(previousScene)
+        if previousScene.isSubType("LiveTVLibraryView")
+            previousScene.callFunc("updateChannelFavorite", { channelId: m.favoriteChannelId, isFavorite: m.channelIsFavorite })
+        end if
+    end if
+
+    m.favoriteChannelTask = createObject("roSGNode", "FavoriteItemsTask")
+    m.favoriteChannelTask.itemId = m.favoriteChannelId
+    m.favoriteChannelTask.favTask = m.channelIsFavorite ? "Favorite" : "Unfavorite"
+    m.favoriteChannelTask.control = TaskControl.RUN
 end sub
 
 sub handleShowsyncmenuAction()
@@ -742,6 +831,24 @@ sub onVideoContentLoaded()
     m.playbackTestComplete = videoContent[0].content.live
 
     m.top.content = videoContent[0].content
+    configureFavoriteChannelButton(videoContent[0])
+    ' Build enriched Now Playing metadata for Roku Voice "what's playing" command
+    itemData = m.global.queueManager.callFunc("getCurrentItem")
+    if isValid(itemData)
+        json = itemData.json ?? itemData
+        mediaItemType = LCase(json.Type ?? string.EMPTY)
+        if isStringEqual(mediaItemType, "episode")
+            season = isValid(json.ParentIndexNumber) ? StrI(json.ParentIndexNumber).trim() : "0"
+            episode = isValid(json.IndexNumber) ? StrI(json.IndexNumber).trim() : "0"
+            seriesName = json.SeriesName ?? json.Name ?? json.title ?? string.EMPTY
+            episodeName = json.Name ?? json.title ?? string.EMPTY
+            displayTitle = `${seriesName} - S${season}E${episode} - ${episodeName}`
+        else
+            contentName = json.Name ?? json.title ?? string.EMPTY
+            displayTitle = isValid(json.ProductionYear) ? `${contentName} (${json.ProductionYear})` : contentName
+        end if
+        m.top.nowPlayingMetadata = { title: displayTitle, contentType: mediaItemType }
+    end if
     m.top.PlaySessionId = videoContent[0].PlaySessionId
     m.top.videoId = videoContent[0].id
     m.top.container = videoContent[0].container
@@ -752,6 +859,7 @@ sub onVideoContentLoaded()
     m.top.transcodeParams = videoContent[0].transcodeparams
     m.chapters = videoContent[0].chapters
     m.overview = videoContent[0].overview
+    m.premiere = videoContent[0].premiere
     m.castPeople = videoContent[0].people
     m.trickplay = videoContent[0].trickplay
     m.top.showID = videoContent[0].showID
@@ -891,6 +999,7 @@ sub onVideoContentLoaded()
 
     m.top.setFocus(true)
     m.osd.live = m.top.content.live
+    refreshLiveOSDContent()
 
     m.top.control = VideoControl.PLAY
 end sub
@@ -1505,9 +1614,7 @@ sub onState(msg)
         m.osd.isSeeking = false
         ' If this is a LiveTV session and we haven't yet set the Live TV Start Time (to ignore rebuffering/retries) then set the Live TV Start Time
         if m.top.content.live and m.osd.liveTvStartTime = 0
-            m.clock = m.osd.findNode("clock")
-            if not isValid(m.clock) then return
-            m.osd.liveTvStartTime = m.clock.callFunc("getCurrentTime")
+            setLiveTvValues()
         end if
 
         if not m.top.content.live
@@ -1533,6 +1640,68 @@ sub onState(msg)
     end if
 end sub
 
+' setLiveTvValues: Set appropriate values for Live TV sessions, including calculating recording offset and live TV rewind limit for recordings that are in progress.  This is intended to be called at the start of a Live TV session, and will check if the Live TV session is also a recording that is in progress to set additional values.
+'
+sub setLiveTvValues()
+    if not isValid(m.clock) then return
+
+    liveTvStartTime = m.clock.callFunc("getCurrentTime")
+    ' Determine if this is a recording that is in progress, and if so then attempt to set values appropriately.
+    if not isValid(m.LoadProgramDetailsTask)
+        m.osd.liveTvStartTime = liveTvStartTime
+        return
+    end if
+
+    if not isStringEqual(chainLookup(m.LoadProgramDetailsTask, "programDetails.json.type"), ItemType.RECORDING)
+        m.osd.liveTvStartTime = liveTvStartTime
+        return
+    end if
+
+    if not isValid(m.LoadRecordingTimerTask) or not isChainValid(m.LoadRecordingTimerTask, "recordingTimerDetails.json.StartDate")
+        m.osd.liveTvStartTime = liveTvStartTime
+        return
+    end if
+
+    if m.LoadProgramDetailsTask.programDetails.json.Status = "InProgress" and isChainValid(m.LoadProgramDetailsTask, "programDetails.json.TimerId")
+        ' Create date time is stored in UTC for server 12.0.0 and later. Prior to server v12.0.0 the create date time is stored in local time zone.
+
+        createDate = createObject("roDateTime")
+        createDate.FromISO8601String(m.LoadProgramDetailsTask.programDetails.json.DateCreated)
+        if serverVersionMeetsMinimumRequirements(m.global.session.server.version, [12, 0, 0])
+            createDate.toLocalTime()
+        end if
+
+        startDate = createObject("roDateTime")
+        startDate.FromISO8601String(m.LoadRecordingTimerTask.recordingTimerDetails.json.StartDate)
+        startDate.toLocalTime()
+
+        endDate = createObject("roDateTime")
+        endDate.FromISO8601String(m.LoadRecordingTimerTask.recordingTimerDetails.json.EndDate)
+        endDate.toLocalTime()
+
+        ' Create date includes any prepadding time, but we need to subtract/add pre/post padding to the start/end date to get the total planned duration.
+        recordingCreateInSeconds = createDate.AsSeconds()
+        recordingStartInSeconds = startDate.AsSeconds() - m.LoadRecordingTimerTask.recordingTimerDetails.json.PrePaddingSeconds
+        recordingEndInSeconds = endDate.AsSeconds() + m.LoadRecordingTimerTask.recordingTimerDetails.json.PostPaddingSeconds
+        durationInSeconds = recordingEndInSeconds - recordingStartInSeconds
+
+        ' If the recording started after the beginning program time, then set a recording offset
+        if recordingCreateInSeconds <= recordingStartInSeconds
+            m.osd.recordingOffset = 0
+        else
+            m.osd.recordingOffset = recordingCreateInSeconds - recordingStartInSeconds
+            ' Check that recordingOffset is within the bounds of the recording duration.  If not, set recording offset to 0 to avoid OSD issues
+            if m.osd.recordingOffset < 0 or m.osd.recordingOffset > durationInSeconds
+                m.osd.recordingOffset = 0
+            end if
+        end if
+        m.osd.liveTvRewindLimit = durationInSeconds
+
+        liveTvStartTime = recordingStartInSeconds
+        m.osd.recordingStartTime = createDate.AsSeconds()
+    end if
+    m.osd.liveTvStartTime = liveTvStartTime
+end sub
 
 sub playbackCheck()
     ' If we have a valid position, and it's greater than 0, no need to trigger transcode
@@ -1736,6 +1905,16 @@ sub skipCurrentSegment()
 end sub
 
 sub onProgramDetailsLoaded()
+    if m.top.content.live and isStringEqual(chainLookup(m.LoadProgramDetailsTask, "programDetails.json.type"), ItemType.RECORDING)
+        if isChainValid(m.LoadProgramDetailsTask, "programDetails.json.TimerId") and m.LoadProgramDetailsTask.programDetails.json.Status = "InProgress"
+            ' Only load the recording timer once by checking if LoadRecordingTimerTask is already valid.  This also handles the case where we fail to load the recording timer - we won't keep trying to load it on every program details refresh.
+            if isValid(m.LoadRecordingTimerTask) and not isChainValid(m.LoadRecordingTimerTask, "recordingTimerDetails.json.Status")
+                m.osd.isRecording = true
+                m.LoadRecordingTimerTask.timerId = m.LoadProgramDetailsTask.programDetails.json.TimerId
+                m.LoadRecordingTimerTask.control = TaskControl.RUN
+            end if
+        end if
+    end if
     ' CurrentProgram can be invalid if we're coming from search results for a show that is not currently airing
     if not isChainValid(m.LoadProgramDetailsTask, "programDetails.json.CurrentProgram") then return
 
